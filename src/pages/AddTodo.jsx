@@ -1,11 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AddTodo = () => {
     const navigate = useNavigate();
 
-    const saveTodo = (event) => {
+    const saveTodo = async (event) => {
         event.preventDefault();
+        //Collect form input
+        const formData = new FormData(event.target);
         //Post data to todo api
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/todos`, formData);
         //Go to the homepage
         navigate('/');
     }
@@ -14,7 +18,8 @@ const AddTodo = () => {
         <div>
             <h1>Add A New Todo</h1>
             <form onSubmit={saveTodo}>
-                <input type="text" placeholder="Enter your task" required />
+                <input type="text" placeholder="Enter your todo" required name="title" />
+                <input type="file"required name="icon" />
                 <button type="submit">Submit</button>
             </form>
         </div>
